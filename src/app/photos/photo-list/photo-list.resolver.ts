@@ -13,7 +13,7 @@ export class PhotoListResolver implements Resolve<Photo>{
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Photo> | Promise<any> | any {
     const userName = route.params.userName;
 
-    return this.serivce.listFromUser(userName);
+    return this.serivce.listFromUserPagineted(userName, 1);
   }
 
 
