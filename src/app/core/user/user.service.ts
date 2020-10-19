@@ -38,4 +38,9 @@ export class UserService {
       console.log(e);
     }
   }
+
+  logout() {
+    this.tokenService.removeToken();
+    this.userSubject.next(null);
+  }
 }
