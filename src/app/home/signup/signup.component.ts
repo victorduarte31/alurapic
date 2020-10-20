@@ -10,7 +10,8 @@ import {PlatformDetectorService} from "../../core/platform-detector/platform-det
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  styleUrls: ['./signup.component.css',],
+  providers: [ UserNotTakenValidatorService ]
 })
 export class SignupComponent implements OnInit, AfterViewInit {
 
