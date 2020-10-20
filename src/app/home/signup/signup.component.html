@@ -2,7 +2,7 @@
 
 <form [formGroup]="signupForm" class="form mt-4" (submit)="signup()">
   <div class="form-group">
-    <input placeholder="email" class="form-control" autofocus formControlName="email">
+    <input #emailInput placeholder="email" class="form-control" autofocus formControlName="email">
     <ap-vmessage *ngIf="signupForm.get('email').errors?.required" text="Email is required!"></ap-vmessage>
     <ap-vmessage *ngIf="signupForm.get('email').errors?.email" text="Invalid e-mail"></ap-vmessage>
   </div>

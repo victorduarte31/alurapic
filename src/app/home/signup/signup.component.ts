@@ -1,25 +1,28 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {lowerCaseValidator} from "../../shared/Validators/lowerCaseValidator";
 import {UserNotTakenValidatorService} from "./user-not-taken.validator.service";
 import {NewUser} from "./new-user";
 import {SignupService} from "./signup.service";
 import {Router} from "@angular/router";
+import {PlatformDetectorService} from "../../core/platform-detector/platform-detector.service";
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, AfterViewInit {
 
   signupForm: FormGroup;
+  @ViewChild('emailInput') emailInput: ElementRef<HTMLInputElement>;
 
   constructor(
     private formBuilder: FormBuilder,
     private userNotTakenValidatorService: UserNotTakenValidatorService,
     private signupService: SignupService,
-    private router: Router
+    private router: Router,
+    private platFormDetectorService: PlatformDetectorService
   ) {
   }
 
@@ -33,6 +36,11 @@ export class SignupComponent implements OnInit {
       fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(14)]],
     })
+
+  }
+
+  ngAfterViewInit(): void {
+    this.platFormDetectorService.isPlatformBrowser() && this.emailInput.nativeElement.focus()// DOM manipulation to be client-side only
   }
 
   signup() {
@@ -42,4 +50,6 @@ export class SignupComponent implements OnInit {
       error => console.log(error)
     )
   }
+
+
 }
