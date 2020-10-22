@@ -2,7 +2,7 @@
   <form [formGroup]="photoForm" class="row" (submit)="upload()">
     <div class="col-md-6 text-center">
       <div class="form-group" *ngIf="!preview; else showPreviewImage">
-        <button class="btn btn-primary" (click)="fileInput.click()">
+        <button immediateClick class="btn btn-primary" (click)="fileInput.click()">
           <i class="fa fa-image fa-4x align-middle"></i>
         </button>
         <input #fileInput type="file"

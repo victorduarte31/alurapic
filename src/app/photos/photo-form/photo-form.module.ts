@@ -5,6 +5,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {VmessageModule} from "../../shared/components/vmessage/vmessage.module";
 import {RouterModule} from "@angular/router";
 import {PhotoModule} from "../photo/photo.module";
+import {ImmediateClickModule} from "../../shared/directives/immediate-click/immediate-click.module";
 
 
 
@@ -15,7 +16,8 @@ import {PhotoModule} from "../photo/photo.module";
     ReactiveFormsModule,
     VmessageModule,
     RouterModule,
-    PhotoModule
+    PhotoModule,
+    ImmediateClickModule
   ]
 })
 export class PhotoFormModule { }
