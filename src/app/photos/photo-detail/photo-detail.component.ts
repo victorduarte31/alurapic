@@ -39,4 +39,14 @@ export class PhotoDetailComponent implements OnInit {
       error => this.toastr.error('Could not delete the photo!')
     );
   }
+
+  like(photo: Photo) {
+    this.photoService.like(photo.id).subscribe(
+      liked => {
+        if (liked)
+          this.photo$ = this.photoService.findById(photo.id)
+      },
+      error => this.toastr.error('Erro ao requisitar a API', 'ERROR')
+    )
+  }
 }
