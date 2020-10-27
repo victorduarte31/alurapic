@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../core/auth/auth.service";
 import {Router} from "@angular/router";
 import {PlatformDetectorService} from "../../core/platform-detector/platform-detector.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-signin',
@@ -18,7 +19,7 @@ export class SigninComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private platFormDetectorService: PlatformDetectorService
+    private platFormDetectorService: PlatformDetectorService,
   ) {
   }
 
