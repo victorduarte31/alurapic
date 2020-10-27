@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PhotoService} from "../photo/photo.service";
 import {Router} from "@angular/router";
+import { ToastrService } from 'ngx-toastr';
+import {UserService} from "../../core/user/user.service";
 
 @Component({
   selector: 'ap-photo-form',
@@ -14,7 +16,12 @@ export class PhotoFormComponent implements OnInit {
   file: File;
   preview: string;
 
-  constructor(private formBuilder: FormBuilder, private photoService: PhotoService, private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private photoService: PhotoService,
+    private router: Router,
+    private userService: UserService,
+    private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -30,7 +37,10 @@ export class PhotoFormComponent implements OnInit {
     const allowComments = this.photoForm.get('allowComments').value;
 
     this.photoService.upload(description, allowComments, this.file)
-        .subscribe(() => this.router.navigate(['']))
+        .subscribe(() => {
+          this.toastr.success('Upload complete');
+          this.router.navigate(['/user', this.userService.getUserName()])
+        })
   }
 
   handleFile(file: File) {

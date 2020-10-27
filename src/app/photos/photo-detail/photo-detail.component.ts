@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {PhotoService} from "../photo/photo.service";
 import {Photo} from "../photo/photo";
 import {Observable} from "rxjs";
+import {ToastrService} from "ngx-toastr";
+import {UserService} from "../../core/user/user.service";
 
 @Component({
   selector: 'app-photo-detail',
@@ -17,17 +19,24 @@ export class PhotoDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private photoService: PhotoService,
-    private router: Router) {
+    private router: Router,
+    private userService: UserService,
+    private  toastr: ToastrService) {
   }
 
   ngOnInit(): void {
     this.photoId = this.route.snapshot.params.photoId;
     this.photo$ = this.photoService.findById(this.photoId);
+    this.photo$.subscribe(() => {}, error => this.router.navigate(['not-found']));
   }
 
   removePhoto() {
     this.photoService.removePhoto(this.photoId).subscribe(
-      () => this.router.navigate([''])
+      () => {
+        this.toastr.success('Photo removed');
+        this.router.navigate(['/user', this.userService.getUserName()])
+      },
+      error => this.toastr.error('Could not delete the photo!')
     );
   }
 }
