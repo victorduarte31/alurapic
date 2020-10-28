@@ -27,14 +27,15 @@ export class PhotoDetailComponent implements OnInit {
   ngOnInit(): void {
     this.photoId = this.route.snapshot.params.photoId;
     this.photo$ = this.photoService.findById(this.photoId);
-    this.photo$.subscribe(() => {}, error => this.router.navigate(['not-found']));
+    this.photo$.subscribe(() => {
+    }, error => this.router.navigate(['not-found']));
   }
 
   removePhoto() {
     this.photoService.removePhoto(this.photoId).subscribe(
       () => {
         this.toastr.success('Photo removed');
-        this.router.navigate(['/user', this.userService.getUserName()])
+        this.router.navigate(['/user', this.userService.getUserName()], {replaceUrl: true})
       },
       error => this.toastr.error('Could not delete the photo!')
     );
