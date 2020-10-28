@@ -6,6 +6,7 @@ import {NewUser} from "./new-user";
 import {SignupService} from "./signup.service";
 import {Router} from "@angular/router";
 import {PlatformDetectorService} from "../../core/platform-detector/platform-detector.service";
+import { userNamePassword } from './username-password.validator';
 
 @Component({
   selector: 'app-signup',
@@ -36,6 +37,8 @@ export class SignupComponent implements OnInit, AfterViewInit {
       ],
       fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(14)]],
+    }, {
+      validator: userNamePassword
     })
 
   }
@@ -45,11 +48,13 @@ export class SignupComponent implements OnInit, AfterViewInit {
   }
 
   signup() {
-    const newUser = this.signupForm.getRawValue() as NewUser;
-    this.signupService.signup(newUser).subscribe(
-      () => this.router.navigate(['']),
-      error => console.log(error)
-    )
+    if (this.signupForm.valid && !this.signupForm.pending) {
+      const newUser = this.signupForm.getRawValue() as NewUser;
+      this.signupService.signup(newUser).subscribe(
+        () => this.router.navigate(['']),
+        error => console.log(error)
+      )
+    }
   }
 
 
